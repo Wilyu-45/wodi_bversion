@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>谁是卧底 - 游戏进行中</title>
+    <link rel="stylesheet" href="css/player.css">
+</head>
+<body>
+    <div class="container">
+        <div class="game-header">
+            <button class="back-btn" onclick="goBack()">← 退出</button>
+            <div class="game-status">
+                <span id="roundDisplay">第 <span id="currentRound">1</span> 轮</span>
+            </div>
+        </div>
+
+        <div class="role-section">
+            <div class="word-card">
+                <span class="word-label">你的词语：</span>
+                <span class="word-value" id="wordDisplay">等待分发</span>
+                <span class="word-divider" id="wordDivider" style="display:none;"> / </span>
+                <span class="word-value" id="secondWordDisplay" style="display:none;"></span>
+            </div>
+            <div class="word-card" id="restrictedWordCard" style="display:none;">
+                <span class="word-label">🚫 限制词：</span>
+                <span class="word-value restricted" id="restrictedWordDisplay"></span>
+            </div>
+        </div>
+
+        <div class="game-table-wrapper">
+            <table class="game-table" id="gameTable">
+                <thead>
+                    <tr>
+                        <th class="col-player">玩家</th>
+                        <th class="col-round">第1轮</th>
+                        <th class="col-round">第2轮</th>
+                        <th class="col-round">第3轮</th>
+                        <th class="col-status">状态</th>
+                        <th class="col-identity">身份</th>
+                        <th class="col-vote">投票</th>
+                        <th class="col-kill">刀人</th>
+                    </tr>
+                </thead>
+                <tbody id="playerTableBody">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="guess-section" id="guessSection">
+            <h3>身份猜测</h3>
+            <div class="guess-list" id="guessList"></div>
+        </div>
+
+        <div class="action-bar" id="actionBar">
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="js/play.js"></script>
+</body>
+</html>

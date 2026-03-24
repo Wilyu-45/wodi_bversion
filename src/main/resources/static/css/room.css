@@ -1,0 +1,211 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 420px;
+}
+
+.room-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 28px 24px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 28px;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 8px 12px 8px 0;
+    transition: color 0.3s;
+}
+
+.back-btn:hover {
+    color: #fff;
+}
+
+.title {
+    flex: 1;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+    margin-right: 52px;
+}
+
+.room-code-section {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    margin-bottom: 20px;
+}
+
+.room-code-section .label {
+    display: block;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.room-code {
+    display: block;
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 6px;
+    font-family: 'Courier New', monospace;
+}
+
+.divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.15);
+    margin: 20px 0;
+}
+
+.player-list-section h2 {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 16px;
+    margin-bottom: 16px;
+    font-weight: 500;
+}
+
+.player-list {
+    min-height: 120px;
+}
+
+.player-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    transition: all 0.3s;
+}
+
+.player-item.host {
+    border-color: rgba(233, 69, 96, 0.4);
+    background: rgba(233, 69, 96, 0.15);
+}
+
+.player-avatar {
+    font-size: 28px;
+}
+
+.player-name {
+    flex: 1;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.host-badge {
+    background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+    color: #fff;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.waiting-text {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    margin-top: 16px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+.action-section {
+    margin-top: 28px;
+}
+
+.btn {
+    width: 100%;
+    padding: 16px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(233, 69, 96, 0.4);
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(233, 69, 96, 0.6);
+}
+
+.btn-primary:disabled {
+    background: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.4);
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-size: 14px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 2000;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.toast.success {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.toast.error {
+    background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+}

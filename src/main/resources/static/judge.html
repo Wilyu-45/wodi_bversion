@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>谁是卧底 - 裁判控制台</title>
+    <link rel="stylesheet" href="css/judge.css">
+</head>
+<body>
+    <div class="container">
+        <div class="game-header">
+            <button class="back-btn" onclick="goBack()">← 退出</button>
+            <div class="game-status">
+                <span id="roundDisplay">第 <span id="currentRound">1</span> 轮</span>
+            </div>
+        </div>
+
+        <div class="game-table-wrapper">
+            <table class="game-table" id="gameTable">
+                <thead>
+                    <tr>
+                        <th class="col-player">玩家</th>
+                        <th class="col-round">第1轮</th>
+                        <th class="col-round">第2轮</th>
+                        <th class="col-round">第3轮</th>
+                        <th class="col-identity">身份</th>
+                        <th class="col-status">状态</th>
+                        <th class="col-death">死因</th>
+                        <th class="col-vote-count">被投票数</th>
+                        <th class="col-speaking">发言</th>
+                    </tr>
+                </thead>
+                <tbody id="playerTableBody">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="action-bar" id="actionBar">
+        </div>
+
+        <div class="vote-kill-records-wrapper" id="voteKillRecordsSection" style="display: none;">
+            <h3>投票与刀人记录</h3>
+            <table class="game-table" id="voteKillRecordsTable">
+                <thead>
+                    <tr>
+                        <th class="col-round">轮次</th>
+                        <th class="col-action-type">行为</th>
+                        <th class="col-player">执行者</th>
+                        <th class="col-player">对象</th>
+                        <th class="col-time">时间</th>
+                    </tr>
+                </thead>
+                <tbody id="voteKillRecordsBody">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="white-board-guess-section" id="whiteBoardGuessSection" style="display: none;">
+            <h3>⬜ 白板猜词</h3>
+            <div class="guess-info">
+                <p><strong>白板玩家：</strong><span id="whiteBoardPlayerName"></span></p>
+                <p><strong>猜测的好人词语：</strong><span id="whiteBoardGuessCivilian"></span></p>
+                <p><strong>猜测的卧底词语：</strong><span id="whiteBoardGuessUndercover"></span></p>
+            </div>
+            <div class="verify-buttons">
+                <button class="btn btn-success" onclick="verifyWhiteBoardGuess(true)">✓ 正确</button>
+                <button class="btn btn-danger" onclick="verifyWhiteBoardGuess(false)">✗ 错误</button>
+            </div>
+        </div>
+
+        <div class="modal" id="identityModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeIdentityModal()">&times;</span>
+                <h2>身份授予</h2>
+                <p class="identity-hint" id="identityModalHint">请选择要授予该玩家的身份</p>
+                <div class="identity-options">
+                    <button class="btn identity-option civilian" onclick="assignIdentity('civilian')">
+                        <span class="identity-icon">👤</span>
+                        <span>平民</span>
+                    </button>
+                    <button class="btn identity-option undercover" onclick="assignIdentity('undercover')">
+                        <span class="identity-icon">🎭</span>
+                        <span>卧底</span>
+                    </button>
+                    <button class="btn identity-option angel" onclick="assignIdentity('angel')">
+                        <span class="identity-icon">👼</span>
+                        <span>天使</span>
+                    </button>
+                    <button class="btn identity-option blank" onclick="assignIdentity('blank')">
+                        <span class="identity-icon">⬜</span>
+                        <span>白板</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="roleCountModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeRoleCountModal()">&times;</span>
+                <h2>角色人数设置</h2>
+                <div class="role-count-inputs">
+                    <div class="role-count-item">
+                        <label>🧑 平民：</label>
+                        <input type="number" id="setCivilianCount" value="3" min="0" max="10">
+                    </div>
+                    <div class="role-count-item">
+                        <label>🕵️ 卧底：</label>
+                        <input type="number" id="setUndercoverCount" value="1" min="0" max="5">
+                    </div>
+                    <div class="role-count-item">
+                        <label>⬜ 白板：</label>
+                        <input type="number" id="setBlankCount" value="0" min="0" max="3">
+                    </div>
+                    <div class="role-count-item">
+                        <label>👼 天使：</label>
+                        <input type="number" id="setAngelCount" value="0" min="0" max="3">
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="saveRoleCounts()">保存</button>
+            </div>
+        </div>
+
+        <div class="modal" id="wordsModal">
+            <div class="modal-content" style="max-width: 600px;">
+                <span class="close" onclick="closeWordsModal()">&times;</span>
+                <h2>设置词语</h2>
+                <div class="word-inputs">
+                    <div class="word-input-group">
+                        <label>🧑 平民词语：</label>
+                        <input type="text" id="setCivilianWord" placeholder="输入平民词语" style="width: 100%;">
+                    </div>
+                    <div class="word-input-group">
+                        <label>🕵️ 卧底词语：</label>
+                        <input type="text" id="setUndercoverWord" placeholder="输入卧底词语" style="width: 100%;">
+                    </div>
+                    <div class="word-input-group">
+                        <label>⬜ 白板提示：</label>
+                        <input type="text" id="setBlankHint" placeholder="输入白板提示词" style="width: 100%;">
+                    </div>
+                    <div class="word-input-group">
+                        <label>🚫 限制词：</label>
+                        <input type="text" id="setRestrictedWord" placeholder="输入禁止使用的词语" style="width: 100%;">
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="saveWords()">保存词语</button>
+            </div>
+        </div>
+
+        <div class="toast" id="toast"></div>
+
+    <script src="js/judge.js"></script>
+</body>
+</html>

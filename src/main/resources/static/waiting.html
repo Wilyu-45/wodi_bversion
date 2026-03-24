@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>谁是卧底 - 等待开始</title>
+    <link rel="stylesheet" href="css/room.css">
+    <style>
+        .waiting-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh;
+            text-align: center;
+        }
+        .waiting-icon {
+            font-size: 80px;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        .waiting-title {
+            font-size: 28px;
+            color: white;
+            margin-bottom: 15px;
+        }
+        .waiting-subtitle {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 40px;
+        }
+        .setup-progress {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px 35px;
+            margin-bottom: 30px;
+            min-width: 350px;
+        }
+        .progress-title {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s;
+        }
+        .progress-step.active {
+            color: #667eea;
+        }
+        .progress-step.completed {
+            color: #27ae60;
+        }
+        .step-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .progress-step.active .step-icon {
+            background: #667eea;
+            animation: pulse 1.5s infinite;
+        }
+        .progress-step.completed .step-icon {
+            background: #27ae60;
+        }
+        .room-info {
+            margin-top: 30px;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        .room-info span {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+        .room-info .room-code {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 18px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="room-card">
+            <div class="header">
+                <button class="back-btn" onclick="leaveRoom()">← 退出</button>
+                <h1 class="title">等待开始</h1>
+            </div>
+
+            <div class="waiting-container">
+                <div class="waiting-icon">⏳</div>
+                <h2 class="waiting-title">房主正在设置游戏...</h2>
+                <p class="waiting-subtitle">请耐心等待，游戏即将开始</p>
+
+                <div class="setup-progress">
+                    <div class="progress-title">游戏设置进度</div>
+                    <div class="progress-step" id="step1">
+                        <span class="step-icon">1</span>
+                        <span>设置词语</span>
+                    </div>
+                    <div class="progress-step" id="step2">
+                        <span class="step-icon">2</span>
+                        <span>设置人数</span>
+                    </div>
+                    <div class="progress-step" id="step3">
+                        <span class="step-icon">3</span>
+                        <span>授予身份</span>
+                    </div>
+                    <div class="progress-step" id="step4">
+                        <span class="step-icon">4</span>
+                        <span>分发词语</span>
+                    </div>
+                    <div class="progress-step" id="step5">
+                        <span class="step-icon">5</span>
+                        <span>开始游戏</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="js/waiting.js"></script>
+</body>
+</html>

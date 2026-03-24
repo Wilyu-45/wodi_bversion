@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>白板猜词 - 谁是卧底</title>
+    <link rel="stylesheet" href="css/play.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            width: 100%;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .header p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+        .card h2 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #f39c12;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-success {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+        }
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+        }
+        .btn-error {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+        }
+        .btn-error:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+        }
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .btn-group .btn {
+            flex: 1;
+        }
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 24px;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .toast.show {
+            opacity: 1;
+        }
+        .toast.success {
+            background: #27ae60;
+        }
+        .toast.error {
+            background: #e74c3c;
+        }
+        .info-text {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 8px;
+        }
+        .words-display {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .words-display .word-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .words-display .word-item:last-child {
+            border-bottom: none;
+        }
+        .words-display .word-label {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .words-display .word-value {
+            color: #f39c12;
+            font-weight: 600;
+        }
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 白板猜词</h1>
+            <p id="pageSubtitle">请根据提示猜测好人和卧底的词语</p>
+        </div>
+
+        <div class="card">
+            <h2>⬜ 提示</h2>
+            <p id="blankHint" style="color: rgba(255, 255, 255, 0.8); font-size: 16px; text-align: center;"></p>
+        </div>
+
+        <div class="card" id="guessInputSection">
+            <h2>🔍 猜测词语</h2>
+            <div class="input-group">
+                <label>好人词语（你认为平民的词语）</label>
+                <input type="text" id="civilianWordInput" placeholder="请输入好人词语">
+            </div>
+            <div class="input-group">
+                <label>卧底词语（你认为卧底的词语）</label>
+                <input type="text" id="undercoverWordInput" placeholder="请输入卧底词语">
+            </div>
+            <p class="info-text">提示：白板提示词仅供参考</p>
+            <button class="btn btn-primary" id="submitBtn" onclick="submitGuess()">提交猜测</button>
+        </div>
+
+        <div class="card hidden" id="wordsDisplaySection">
+            <h2>📝 已提交的猜测</h2>
+            <div class="words-display">
+                <div class="word-item">
+                    <span class="word-label">好人词语：</span>
+                    <span class="word-value" id="civilianWordDisplay">-</span>
+                </div>
+                <div class="word-item">
+                    <span class="word-label">卧底词语：</span>
+                    <span class="word-value" id="undercoverWordDisplay">-</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card hidden" id="judgeButtonsSection">
+            <h2>⚖️ 裁判审核</h2>
+            <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 20px;">请判断白板玩家的猜测是否正确：</p>
+            <p style="color: rgba(255, 255, 255, 0.5); font-size: 12px; margin-bottom: 15px;">（正确 = 猜测与原本词语相符，白板胜利；错误 = 猜测错误，平民胜利）</p>
+            <div class="btn-group">
+                <button class="btn btn-success" onclick="judgeVerify(true)">✓ 正确</button>
+                <button class="btn btn-error" onclick="judgeVerify(false)">✗ 错误</button>
+            </div>
+        </div>
+
+        <div id="waitingSection"></div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="js/guess-word.js"></script>
+</body>
+</html>

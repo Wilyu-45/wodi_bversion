@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>谁是卧底（动画区版） - 欢迎页</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="welcome-card">
+            <div class="logo">
+                <span class="icon">🎭</span>
+            </div>
+            <h1 class="title">谁是卧底（动画区版）</h1>
+            <p class="subtitle">找出隐藏在玩家中的卧底</p>
+            
+            <div class="game-info">
+                <div class="info-item">
+                    <span class="info-icon">👥</span>
+                    <span class="info-text">支持10名玩家</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">⏱️</span>
+                    <span class="info-text">30分钟/局</span>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-primary" onclick="startGame()">开始游戏</button>
+                <button class="btn btn-secondary" onclick="showRules()">游戏规则</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="rulesModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeRules()">&times;</span>
+            <h2>游戏规则</h2>
+            <div class="rules-content">
+                <h3>游戏简介</h3>
+                <p>谁是卧底是一款多人互动推理游戏。玩家中平民获得相同的词语，而卧底获得与平民相似的词语。天使获得二者的词语。白板不获得词语，只有提示词。
+                每轮玩家用简短的词语描述自己手中的词语，不可重复，会有相应的限制词存在。</p>
+                
+                <h3>游戏流程</h3>
+                <ol>
+                    <li>系统为每位玩家分发对应的词语，平民与卧底玩家不知道自己的身份</li>
+                    <li>所有玩家轮流描述自己的词语</li>
+                    <li>每轮描述后，所有玩家投票选出可能是卧底与白板的人</li>
+                    <li>得票最多的玩家出局，如果出现平票，则无人出局</li>
+                     <li>在夜晚阶段，认为自己是卧底的玩家进行刀人，如果他确实是卧底，则目标出局，如果他不是卧底，则自己出局</li>
+                </ol>
+                
+                <h3>胜利条件</h3>
+                <ul>
+                    <li><strong>平民胜利：</strong>成功投出卧底与白板</li>
+                    <li><strong>卧底胜利：</strong>存活到最后</li>
+                    <li><strong>白板胜利：</strong>投出卧底后存活并猜对平民与卧底的词语</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

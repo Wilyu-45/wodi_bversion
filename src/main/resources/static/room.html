@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>谁是卧底 - 房间</title>
+    <link rel="stylesheet" href="css/room.css">
+</head>
+<body>
+    <div class="container">
+        <div class="room-card">
+            <div class="header">
+                <button class="back-btn" onclick="goBack()">← 返回</button>
+                <h1 class="title">游戏房间</h1>
+            </div>
+
+            <div class="room-code-section">
+                <span class="label">房间号</span>
+                <span class="room-code" id="displayRoomCode">------</span>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="player-list-section">
+                <h2>玩家列表</h2>
+                <div class="player-list" id="playerList">
+                    <div class="player-item host">
+                        <span class="player-avatar">😎</span>
+                        <span class="player-name" id="hostName">加载中...</span>
+                        <span class="host-badge">房主</span>
+                    </div>
+                </div>
+                <p class="waiting-text" id="waitingText">等待其他玩家加入...</p>
+            </div>
+
+            <div class="action-section">
+                <button class="btn btn-primary" id="startBtn" onclick="startGame()" disabled>开始游戏</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="js/room.js"></script>
+</body>
+</html>

@@ -9,8 +9,8 @@ spring:
     static-locations: classpath:/static/
   datasource:
     url: jdbc:mysql://localhost:3306/undercover?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
-    username: navicat
-    password: Asd123456.
+    username: 
+    password: 
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
